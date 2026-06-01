@@ -15,12 +15,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import mx.utng.smarthealthmonitor.data.SmartHealthRepository
 import mx.utng.smarthealthmonitor.data.models.LecturaFC
 import mx.utng.smarthealthmonitor.data.models.MockData
 import mx.utng.smarthealthmonitor.ui.components.FilaHistorial
 import mx.utng.smarthealthmonitor.ui.components.TarjetaDato
 import mx.utng.smarthealthmonitor.ui.theme.SmartHealthMonitorTheme
 import mx.utng.smarthealthmonitor.ui.viewmodel.DashboardViewModel
+import mx.utng.smarthealthmonitor.BuildConfig
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -101,6 +103,23 @@ fun DashboardScreen(
                         }
                     }
                 }
+                item {
+                    // Botón de simulación — SOLO PARA DEBUG
+                    if (BuildConfig.DEBUG) {
+                        OutlinedButton(
+                            onClick = {
+                                // Simular lectura del wearable
+                                val fcSimulado = (60..110).random()
+                                SmartHealthRepository.actualizarFC(fcSimulado)
+                                SmartHealthRepository.actualizarPasos((3000..8000).random())
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Simular dato del wearable (DEBUG)")
+                        }
+                    }
+                }
+
                 items(historial, key = { it.id }) { lectura ->
                     FilaHistorial(lectura = lectura)
                 }
