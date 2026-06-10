@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId = "mx.utng.smarthealthmonitor"
-        minSdk = 26
+        minSdk = 30
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -41,7 +41,10 @@ android {
 }
 
 dependencies {
-    // Wearable Data Layer API
+    val roomVersion = "2.6.1"
+    implementation("androidx.room:room-runtime:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
+    annotationProcessor("androidx.room:room-compiler:$roomVersion")    // Wearable Data Layer API
     implementation("com.google.android.gms:play-services-wearable:18.2.0")
     // Coroutines para await()
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
