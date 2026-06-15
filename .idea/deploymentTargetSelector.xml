@@ -4,10 +4,21 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-05-27T23:21:16.211060100Z">
+        <DropdownSelection timestamp="2026-06-15T22:12:24.565762Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\laura\.android\avd\Pixel_6_API_36.avd" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\laura\.android\avd\Wear_OS_Square_API_34.avd" />
+            </handle>
+          </Target>
+        </DropdownSelection>
+        <DialogSelection />
+      </SelectionState>
+      <SelectionState runConfigName="wear">
+        <option name="selectionMode" value="DROPDOWN" />
+        <DropdownSelection timestamp="2026-06-15T22:12:51.970083900Z">
+          <Target type="DEFAULT_BOOT">
+            <handle>
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\laura\.android\avd\Wear_OS_Square_API_34.avd" />
             </handle>
           </Target>
         </DropdownSelection>

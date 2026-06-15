@@ -4,6 +4,11 @@ package mx.utng.smarthealthmonitor.data
 import android.util.Log
 import com.google.android.gms.wearable.MessageEvent
 import com.google.android.gms.wearable.WearableListenerService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 class WearListenerService : WearableListenerService() {
 
@@ -13,21 +18,32 @@ class WearListenerService : WearableListenerService() {
         private const val TAG = "WearListener"
     }
 
+    private val serviceScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+
     override fun onMessageReceived(messageEvent: MessageEvent) {
-        val data   = String(messageEvent.data)
-        val path   = messageEvent.path
+        val data = String(messageEvent.data)
+        val path = messageEvent.path
         Log.d(TAG, "Mensaje recibido: path=$path, data=$data")
 
         when (path) {
             PATH_FC -> {
                 val bpm = data.toIntOrNull() ?: return
-                SmartHealthRepository.actualizarFC(bpm)
+                serviceScope.launch {
+                    SmartHealthRepository.actualizarFC(bpm)
+                }
             }
             PATH_PASOS -> {
                 val pasos = data.toIntOrNull() ?: return
-                SmartHealthRepository.actualizarPasos(pasos)
+                serviceScope.launch {
+                    SmartHealthRepository.actualizarPasos(pasos)
+                }
             }
             else -> Log.w(TAG, "Path desconocido: $path")
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        serviceScope.cancel()
     }
 }
