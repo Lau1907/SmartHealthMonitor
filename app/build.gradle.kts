@@ -1,8 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -46,7 +46,6 @@ dependencies {
     implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
     ksp("androidx.room:room-compiler:$roomVersion")
-    // Wearable Data Layer API
     implementation("com.google.android.gms:play-services-wearable:18.2.0")
     // Coroutines para await()
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")

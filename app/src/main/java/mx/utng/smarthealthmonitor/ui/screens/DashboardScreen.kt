@@ -15,8 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.launch
 import mx.utng.smarthealthmonitor.data.SmartHealthRepository
-import mx.utng.smarthealthmonitor.data.models.LecturaFC
+import mx.utng.smarthealthmonitor.data.db.LecturaFC
 import mx.utng.smarthealthmonitor.data.models.MockData
 import mx.utng.smarthealthmonitor.ui.components.FilaHistorial
 import mx.utng.smarthealthmonitor.ui.components.TarjetaDato
@@ -34,8 +35,7 @@ fun DashboardScreen(
     // collectAsState() convierte StateFlow en State de Compose
     val fc       by viewModel.fc.collectAsState()
     val pasos    by viewModel.pasos.collectAsState()
-    val historial = viewModel.historial
-
+    val historial by viewModel.historial.collectAsState()
     SmartHealthMonitorTheme {
         Scaffold(
             topBar = {
@@ -110,7 +110,9 @@ fun DashboardScreen(
                             onClick = {
                                 // Simular lectura del wearable
                                 val fcSimulado = (60..110).random()
-                                SmartHealthRepository.actualizarFC(fcSimulado)
+                                kotlinx.coroutines.GlobalScope.launch {
+                                    SmartHealthRepository.actualizarFC(fcSimulado)
+                                }
                                 SmartHealthRepository.actualizarPasos((3000..8000).random())
                             },
                             modifier = Modifier.fillMaxWidth()

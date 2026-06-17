@@ -21,7 +21,9 @@ abstract class SmartHealthDB : RoomDatabase() {
                     context.applicationContext,
                     SmartHealthDB::class.java,
                     "smarthealthmonitor_db"
-                ).build().also { INSTANCE = it }
+                )
+                    .allowMainThreadQueries()
+                    .build()
             }
         }
     }

@@ -1,21 +1,16 @@
 package mx.utng.smarthealthmonitor.data.models
 
-data class LecturaFC(
-    val id: Int,
-    val valorBpm: Int,
-    val hora: String,
-    val esNormal: Boolean = valorBpm in 60..100  // se calcula automáticamente
-)
+import mx.utng.smarthealthmonitor.data.db.LecturaFC
 
 object MockData {
     val historialFC = listOf(
-        LecturaFC(1, 78, "11:00"),
-        LecturaFC(2, 82, "10:30"),
-        LecturaFC(3, 76, "10:00"),
-        LecturaFC(4, 95, "09:30", false), // fuera de rango → esNormal = false
-        LecturaFC(5, 71, "09:00"),
-        LecturaFC(6, 80, "08:30"),
-        LecturaFC(7, 74, "08:00")
+        LecturaFC(valorBpm = 78, hora = "11:00"),
+        LecturaFC(valorBpm = 82, hora = "10:30"),
+        LecturaFC(valorBpm = 76, hora = "10:00"),
+        LecturaFC(valorBpm = 95, hora = "09:30"),
+        LecturaFC(valorBpm = 71, hora = "09:00"),
+        LecturaFC(valorBpm = 80, hora = "08:30"),
+        LecturaFC(valorBpm = 74, hora = "08:00")
     )
     var fcActual = 78
     var pasosActual = 4250
