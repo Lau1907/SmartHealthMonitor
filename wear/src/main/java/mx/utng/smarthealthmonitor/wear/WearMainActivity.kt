@@ -9,7 +9,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
-import mx.utng.smarthealthmonitor.wear.presentation.WearDashboardScreen
+import mx.utng.smarthealthmonitor.wear.presentation.SmartHealthWearNavGraph
 import mx.utng.smarthealthmonitor.wear.presentation.theme.SmartHealthWearTheme
 
 class WearMainActivity : ComponentActivity() {
@@ -43,7 +43,7 @@ class WearMainActivity : ComponentActivity() {
 
         setContent {
             SmartHealthWearTheme {
-                WearDashboardScreen()
+                SmartHealthWearNavGraph()
             }
         }
     }
