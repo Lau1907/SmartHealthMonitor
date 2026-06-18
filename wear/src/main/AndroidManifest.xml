@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-feature android:name="android.hardware.type.watch" />
 
@@ -8,6 +9,7 @@
     <uses-permission android:name="android.permission.health.READ_HEART_RATE" />
     <uses-permission android:name="android.permission.health.READ_STEPS" />
     <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION" />
+    <uses-permission android:name="android.permission.BIND_WALLPAPER" tools:ignore="ProtectedPermissions" />
 
     <application
         android:allowBackup="true"
@@ -37,6 +39,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".watchface.SmartHealthWatchFaceService"
+            android:exported="true"
+            android:label="SmartHealth Watch Face"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/watch_face" />
+            <meta-data
+                android:name="com.google.android.wearable.watchface.preview"
+                android:resource="@mipmap/ic_launcher" />
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+                <category android:name="com.google.android.wearable.watchface.category.WATCH_FACE" />
+            </intent-filter>
+        </service>
 
     </application>
 
