@@ -1,6 +1,7 @@
 // ui/screens/DashboardScreen.kt
 package mx.utng.smarthealthmonitor.ui.screens
 
+import android.view.ContextThemeWrapper
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -12,9 +13,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.mediarouter.app.MediaRouteButton
+import com.google.android.gms.cast.framework.CastButtonFactory
 import kotlinx.coroutines.launch
 import mx.utng.smarthealthmonitor.data.SmartHealthRepository
 import mx.utng.smarthealthmonitor.data.db.LecturaFC
@@ -44,6 +49,24 @@ fun DashboardScreen(
                         Text(
                             text = "SmartHealth",
                             style = MaterialTheme.typography.titleLarge
+                        )
+                    },
+                    actions = {
+                        // CastButton: AndroidView que envuelve MediaRouteButton del Cast SDK.
+                        // Sin Composable nativo — se integra igual que ExoPlayer/PlayerView en la TV.
+                        val context = LocalContext.current
+                        AndroidView(
+                            factory = { ctx ->
+                                // MediaRouteButton necesita un tema Theme.AppCompat/MaterialComponents
+                                // para pintar bien el ícono; ContextThemeWrapper evita crashes si el
+                                // theme base de la Activity no es compatible.
+                                MediaRouteButton(
+                                    ContextThemeWrapper(ctx, androidx.appcompat.R.style.Theme_AppCompat)
+                                ).apply {
+                                    CastButtonFactory.setUpMediaRouteButton(context, this)
+                                }
+                            },
+                            modifier = Modifier.size(48.dp)
                         )
                     },
                     colors = TopAppBarDefaults.topAppBarColors(
@@ -131,6 +154,9 @@ fun DashboardScreen(
 }
 
 // ── Preview usa MockData directamente (no ViewModel) ──────────────────────────
+// NOTA: el CastButton NO se incluye en el Preview porque CastButtonFactory
+// requiere un CastContext inicializado (viene de CastOptionsProvider en runtime real);
+// en el entorno de Preview esto puede crashear el renderizado del IDE.
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true, name = "Dashboard - Light",
     showSystemUi = true, device = "id:pixel_6")
