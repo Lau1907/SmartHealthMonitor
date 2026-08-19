@@ -1,6 +1,7 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
@@ -31,6 +32,14 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+
+    // FALTABA: sin esto Gradle no activa el compilador de Compose para este módulo
+    buildFeatures {
+        compose = true
+    }
+    // NOTA: con el plugin kotlin.compose (Kotlin 2.0+) NO se necesita
+    // composeOptions { kotlinCompilerExtensionVersion = "..." } — el plugin
+    // ya toma la versión correcta automáticamente. Si lo tenías, bórralo.
 }
 
 dependencies {
@@ -41,4 +50,13 @@ dependencies {
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
     implementation("androidx.fragment:fragment-ktx:1.8.0")
+    implementation("androidx.navigation:navigation-compose:2.8.5")
+    implementation("androidx.tv:tv-material:1.0.0")
+    implementation("androidx.media3:media3-exoplayer:1.5.1")
+    implementation("androidx.media3:media3-ui:1.5.1")
+    implementation("androidx.activity:activity-compose:1.9.3")
+    implementation(platform("androidx.compose:compose-bom:2024.12.01"))
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.foundation:foundation")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.7")
 }
