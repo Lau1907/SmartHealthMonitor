@@ -24,8 +24,6 @@ Desarrollada como proyecto integrador en UTNG — 9° Cuatrimestre 2025.
 | WearAlertaScreen    | Botones circulares de confirmación |
 | SmartHealth WatchFace | Hora + FC en el WatchFace nativo |
 
-|screenshots/watchface..jpeg y wear_dashboard.jpeg|
-<img width="837" height="407" alt="image" src="https://github.com/user-attachments/assets/97edfbd6-74cb-4f88-82c3-35ddb4bef1ab" />
 
 ## Arquitectura — SmartHealth Monitor
 
